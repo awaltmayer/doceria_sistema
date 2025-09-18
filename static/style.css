@@ -1,0 +1,276 @@
+/* static/style.css */
+
+/* Variáveis CSS para cores */
+:root {
+    --primary-color: #FF6F61; /* Um tom de rosa/coral para destaque */
+    --secondary-color: #FFB347; /* Um tom de laranja suave */
+    --background-color: #FFF0F5; /* Rosa claro para o fundo */
+    --text-color: #333333;
+    --light-text-color: #666666;
+    --border-color: #FFDAB9; /* Pêssego claro para bordas */
+    --button-bg-color: var(--primary-color);
+    --button-text-color: #FFFFFF;
+    --input-bg-color: #FFFFFF;
+    --input-border-color: #CCCCCC;
+}
+
+/* Estilos globais */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 960px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Formulários */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--light-text-color);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="number"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 5px;
+    background-color: var(--input-bg-color);
+    font-size: 16px;
+}
+
+button[type="submit"] {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #E05A50; /* Um tom mais escuro do primary-color */
+}
+
+/* Mensagens Flash */
+.flash-message {
+    background-color: #D4EDDA;
+    color: #155724;
+    border: 1px solid #C3E6CB;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+/* Lista de Trufas (Cardápio) */
+.trufa-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.trufa-item {
+    background-color: #FDF5E6; /* Creme suave */
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: left;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.trufa-item h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.trufa-item p {
+    color: var(--light-text-color);
+    font-size: 15px;
+}
+
+.trufa-item .price {
+    font-weight: bold;
+    color: var(--secondary-color);
+    font-size: 17px;
+}
+
+.quantity-control {
+    margin-top: 15px;
+}
+
+.quantity-control label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.unavailable {
+    color: #DC3545; /* Vermelho para indisponível */
+    font-weight: bold;
+}
+
+/* Lista de Pedidos (Admin Dashboard) */
+.pedido-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.pedido-item {
+    background-color: #FDF5E6;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    text-align: left;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.pedido-item h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.pedido-item p {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    .trufa-list {
+        grid-template-columns: 1fr;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 15px;
+    }
+}
+
+.trufa-image {
+    max-width: 100%;
+    height: 150px; /* Altura fixa para padronizar */
+    object-fit: cover; /* Corta a imagem para preencher o espaço */
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border-color);
+}
+
+/* Melhorias para botões */
+button {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px; /* Botões mais arredondados */
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #E05A50; /* Um tom mais escuro do primary-color */
+    transform: translateY(-2px); /* Efeito sutil ao passar o mouse */
+}
+
+button:active {
+    transform: translateY(0); /* Retorna à posição original ao clicar */
+}
+
+/* Estilo para links de ação (Sair, Cadastre-se aqui) */
+a.button-link {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+a.button-link:hover {
+    background-color: #E69A3F;
+    text-decoration: none;
+}
+
+/* Ajustes para a página de login/registro */
+.container h1 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+.form-group input {
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.form-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(var(--primary-color), 0.5);
+    outline: none;
+}
+
+/* Mensagens Flash mais visíveis */
+.flash-message {
+    background-color: #FFDDC1; /* Cor mais suave para mensagens */
+    color: #A0522D; /* Marrom para o texto */
+    border-color: #FFC080;
+    font-weight: bold;
+    text-align: center;
+}

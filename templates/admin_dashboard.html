@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Trufaria</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="style.css") }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Painel do Administrador</h1>
+        <h2>Pedidos Recebidos</h2>
+        {% if pedidos %}
+            <ul class="pedido-list">
+                {% for pedido in pedidos %}
+                <li>
+                    <div class="pedido-item">
+                        <h3>Pedido #{{ pedido.id }} - Status: {{ pedido.status }}</h3>
+                        <p>Data: {{ pedido.data_pedido.strftime("%d/%m/%Y %H:%M") }}</p>
+                        <p>Cliente: {{ pedido.cliente.nome_usuario }} ({{ pedido.cliente.email }} - {{ pedido.cliente.telefone }})</p>
+                        <p>Detalhes: {{ pedido.detalhes_pedido }}</p>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nenhum pedido foi feito ainda.</p>
+        {% endif %}
+        <p><a href="{{ url_for("admin_logout") }}">Sair</a></p>
+    </div>
+</body>
+</html>
