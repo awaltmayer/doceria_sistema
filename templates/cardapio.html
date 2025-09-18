@@ -4,31 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cardápio - Doceria</title>
-    <!-- A forma correta de chamar o CSS com Flask -->
+    <!-- A forma mais robusta de chamar o ficheiro CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <header>
-        <h1>Nosso Cardápio de Trufas</h1>
-        <p>Olá, Augusto Lindo! Escolha suas trufas favoritas:</p>
-        <a href="{{ url_for('ver_carrinho') }}" class="button-carrinho">Ver Carrinho / Finalizar Compra</a>
-    </header>
+    <div class="container">
+        <header>
+            <h1>Nosso Cardápio de Trufas</h1>
+            <a href="{{ url_for('ver_carrinho') }}" class="button-carrinho">Ver Carrinho / Finalizar Compra</a>
+        </header>
 
-    <main class="cardapio-container">
+        <!-- Código para mostrar mensagens flash (alertas) -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                <ul class="flashes">
+                <div class="flashes">
                 {% for category, message in messages %}
-                    <li class="{{ category }}">{{ message }}</li>
+                    <div class="flash {{ category }}">{{ message }}</div>
                 {% endfor %}
-                </ul>
+                </div>
             {% endif %}
         {% endwith %}
 
-        <div class="trufas-grid">
+        <main class="trufas-grid">
             {% for trufa in trufas %}
             <div class="trufa-card">
-                <!-- A forma correta de chamar as imagens com Flask -->
+                <!-- A forma mais robusta de chamar os ficheiros de imagem -->
                 <img src="{{ url_for('static', filename=trufa.image_url) }}" alt="Foto da trufa de {{ trufa.nome }}">
                 <h2>{{ trufa.nome }}</h2>
                 <p>{{ trufa.descricao }}</p>
@@ -36,19 +36,17 @@
 
                 <form method="POST" action="{{ url_for('adicionar_carrinho') }}">
                     <input type="hidden" name="trufa_id" value="{{ trufa.id }}">
-                    <label for="quantidade-{{ trufa.id }}">Quantidade:</label>
-                    <input type="number" id="quantidade-{{ trufa.id }}" name="quantidade" value="0" min="0" required>
+                    <div class="form-group">
+                        <label for="quantidade-{{ trufa.id }}">Quantidade:</label>
+                        <input type="number" id="quantidade-{{ trufa.id }}" name="quantidade" value="0" min="0" required>
+                    </div>
                     <button type="submit">Adicionar ao Carrinho</button>
                 </form>
             </div>
             {% else %}
             <p>Nenhuma trufa encontrada no cardápio no momento.</p>
             {% endfor %}
-        </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Doceria do Augusto</p>
-    </footer>
+        </main>
+    </div>
 </body>
 </html>
