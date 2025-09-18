@@ -3,39 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio - Trufaria</title>
-    <link rel="stylesheet" href="{{ url_for("static", filename="style.css") }}">
+    <title>Cardápio - Doceria</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
+    <header>
         <h1>Nosso Cardápio de Trufas</h1>
-        <p>Olá, {{ session.get("client_username") }}! Escolha suas trufas favoritas:</p>
-        <form method="POST" action="{{ url_for("fazer_pedido") }}">
-            <ul class="trufa-list">
-                {% for trufa in trufas %}
-                <li>
-                    <div class="trufa-item">
-                        {% if trufa.image_url %}
-                        <img src="{{ url_for("static", filename=trufa.image_url.split("/static/")[1]) }}" alt="{{ trufa.sabor }}" class="trufa-image">
-                        {% endif %}
-                        <h3>{{ trufa.sabor }}</h3>
-                        <p>{{ trufa.descricao }}</p>
-                        <p class="price">Preço: R$ {{ "%.2f" | format(trufa.preco) }}</p>
-                        {% if trufa.disponivel %}
-                        <div class="quantity-control">
-                            <label for="quantity_{{ trufa.id }}">Quantidade:</label>
-                            <input type="number" id="quantity_{{ trufa.id }}" name="trufa_{{ trufa.id }}" min="0" value="0">
-                        </div>
-                        {% else %}
-                        <p class="unavailable">Indisponível</p>
-                        {% endif %}
-                    </div>
-                </li>
+        <p>Olá, Augusto Lindo! Escolha suas trufas favoritas:</p>
+        <!-- Botão para ver o carrinho -->
+        <a href="{{ url_for('ver_carrinho') }}" class="button-carrinho">Ver Carrinho / Finalizar Compra</a>
+    </header>
+
+    <main class="cardapio-container">
+        <!-- Exibe mensagens flash (como "item adicionado!") -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
                 {% endfor %}
-            </ul>
-            <button type="submit">Enviar Pedido</button>
-        </form>
-        <p><a href="{{ url_for("logout") }}">Sair</a></p>
-    </div>
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <div class="trufas-grid">
+            {% for trufa in trufas %}
+            <div class="trufa-card">
+                <!-- Usamos url_for para o caminho da imagem, é mais seguro -->
+                <img src="{{ url_for('static', filename=trufa.image_url) }}" alt="Foto da trufa de {{ trufa.nome }}">
+                <h2>{{ trufa.nome }}</h2>
+                <p>{{ trufa.descricao }}</p>
+                <p class="preco">Preço: R$ {{ "%.2f"|format(trufa.preco) }}</p>
+
+                <!-- Formulário individual para adicionar cada trufa ao carrinho -->
+                <form method="POST" action="{{ url_for('adicionar_carrinho') }}">
+                    <input type="hidden" name="trufa_id" value="{{ trufa.id }}">
+                    <label for="quantidade-{{ trufa.id }}">Quantidade:</label>
+                    <input type="number" id="quantidade-{{ trufa.id }}" name="quantidade" value="0" min="0" required>
+                    <button type="submit">Adicionar ao Carrinho</button>
+                </form>
+            </div>
+            {% else %}
+            <p>Nenhuma trufa encontrada no cardápio no momento.</p>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Doceria do Augusto</p>
+    </footer>
 </body>
 </html>
