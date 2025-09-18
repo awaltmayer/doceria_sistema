@@ -1,276 +1,213 @@
-/* static/style.css */
+/* Reset Básico e Fontes */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&display=swap');
 
-/* Variáveis CSS para cores */
 :root {
-    --primary-color: #FF6F61; /* Um tom de rosa/coral para destaque */
-    --secondary-color: #FFB347; /* Um tom de laranja suave */
-    --background-color: #FFF0F5; /* Rosa claro para o fundo */
-    --text-color: #333333;
-    --light-text-color: #666666;
-    --border-color: #FFDAB9; /* Pêssego claro para bordas */
-    --button-bg-color: var(--primary-color);
-    --button-text-color: #FFFFFF;
-    --input-bg-color: #FFFFFF;
-    --input-border-color: #CCCCCC;
+    --cor-principal: #8D5B4C;
+    --cor-secundaria: #E4D4C8;
+    --cor-fundo: #F9F5F2;
+    --cor-texto: #4A3F35;
+    --cor-sucesso: #4CAF50;
+    --cor-info: #2196F3;
+    --cor-perigo: #f44336;
 }
 
-/* Estilos globais */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
     margin: 0;
-    padding: 0;
-    background-color: var(--background-color);
-    color: var(--text-color);
+    padding: 20px;
     line-height: 1.6;
 }
 
 .container {
-    max-width: 960px;
-    margin: 40px auto;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
-    background-color: #FFFFFF;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+header {
     text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 2px solid var(--cor-secundaria);
+    padding-bottom: 20px;
 }
 
-h1, h2, h3 {
-    color: var(--primary-color);
-    margin-bottom: 20px;
-}
-
-p {
+header h1 {
+    font-family: 'Playfair Display', serif;
+    color: var(--cor-principal);
+    font-size: 2.5rem;
     margin-bottom: 10px;
 }
 
-a {
-    color: var(--primary-color);
+/* Botões */
+.button-principal, button {
+    background-color: var(--cor-principal);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
     text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 1rem;
 }
 
-a:hover {
-    text-decoration: underline;
+.button-principal:hover, button:hover {
+    background-color: #6a4539;
+    transform: translateY(-2px);
+}
+
+.button-carrinho {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #fff;
+    color: var(--cor-principal);
+    border: 2px solid var(--cor-principal);
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.button-carrinho:hover {
+    background-color: var(--cor-principal);
+    color: #fff;
+}
+
+/* Grid do Cardápio */
+.trufas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.trufa-card {
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-secundaria);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.trufa-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.trufa-card img {
+    max-width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.trufa-card h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--cor-principal);
+    margin: 10px 0;
+}
+
+.trufa-card .preco {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--cor-texto);
+    margin: 10px 0;
 }
 
 /* Formulários */
 .form-group {
-    margin-bottom: 15px;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+input[type="number"], input[type="text"], input[type="tel"], textarea {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--cor-secundaria);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type="number"] {
+    width: 80px;
+}
+
+/* Página do Carrinho e Obrigado */
+.carrinho-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+}
+
+.carrinho-tabela th, .carrinho-tabela td {
+    padding: 15px;
     text-align: left;
+    border-bottom: 1px solid var(--cor-secundaria);
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: var(--light-text-color);
+.carrinho-tabela th {
+    background-color: var(--cor-fundo);
+    font-weight: 600;
 }
 
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="password"],
-.form-group input[type="number"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    border: 1px solid var(--input-border-color);
-    border-radius: 5px;
-    background-color: var(--input-bg-color);
-    font-size: 16px;
+.carrinho-tabela tfoot td {
+    font-size: 1.2rem;
+    font-weight: 700;
 }
 
-button[type="submit"] {
-    background-color: var(--button-bg-color);
-    color: var(--button-text-color);
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-    background-color: #E05A50; /* Um tom mais escuro do primary-color */
-}
-
-/* Mensagens Flash */
-.flash-message {
-    background-color: #D4EDDA;
-    color: #155724;
-    border: 1px solid #C3E6CB;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-}
-
-/* Lista de Trufas (Cardápio) */
-.trufa-list {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
+.checkout-form {
+    background-color: var(--cor-fundo);
+    padding: 30px;
+    border-radius: 12px;
     margin-top: 30px;
 }
 
-.trufa-item {
-    background-color: #FDF5E6; /* Creme suave */
-    border: 1px solid var(--border-color);
+.obrigado-container {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.obrigado-container .endereco {
+    background: #eee;
+    padding: 15px;
     border-radius: 8px;
-    padding: 20px;
-    text-align: left;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: inline-block;
+    margin-top: 10px;
 }
 
-.trufa-item h3 {
-    color: var(--primary-color);
-    margin-top: 0;
-    margin-bottom: 10px;
-}
-
-.trufa-item p {
-    color: var(--light-text-color);
-    font-size: 15px;
-}
-
-.trufa-item .price {
-    font-weight: bold;
-    color: var(--secondary-color);
-    font-size: 17px;
-}
-
-.quantity-control {
-    margin-top: 15px;
-}
-
-.quantity-control label {
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.unavailable {
-    color: #DC3545; /* Vermelho para indisponível */
-    font-weight: bold;
-}
-
-/* Lista de Pedidos (Admin Dashboard) */
-.pedido-list {
+/* Mensagens Flash */
+.flashes {
     list-style: none;
     padding: 0;
-    margin-top: 20px;
+    margin: 20px 0;
 }
-
-.pedido-item {
-    background-color: #FDF5E6;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
+.flash {
     padding: 15px;
     margin-bottom: 15px;
-    text-align: left;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    color: white;
 }
+.flash.success { background-color: var(--cor-sucesso); }
+.flash.info { background-color: var(--cor-info); }
+.flash.danger { background-color: var(--cor-perigo); }
 
-.pedido-item h3 {
-    color: var(--primary-color);
-    margin-top: 0;
-    margin-bottom: 8px;
-}
-
-.pedido-item p {
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .container {
-        margin: 20px;
-        padding: 15px;
-    }
-
-    .trufa-list {
-        grid-template-columns: 1fr;
-    }
-
-    button[type="submit"] {
-        width: 100%;
-        padding: 15px;
-    }
-}
-
-.trufa-image {
-    max-width: 100%;
-    height: 150px; /* Altura fixa para padronizar */
-    object-fit: cover; /* Corta a imagem para preencher o espaço */
-    border-radius: 5px;
-    margin-bottom: 10px;
-    border: 1px solid var(--border-color);
-}
-
-/* Melhorias para botões */
-button {
-    background-color: var(--button-bg-color);
-    color: var(--button-text-color);
-    padding: 12px 25px;
-    border: none;
-    border-radius: 25px; /* Botões mais arredondados */
-    cursor: pointer;
-    font-size: 17px;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-top: 20px;
-}
-
-button:hover {
-    background-color: #E05A50; /* Um tom mais escuro do primary-color */
-    transform: translateY(-2px); /* Efeito sutil ao passar o mouse */
-}
-
-button:active {
-    transform: translateY(0); /* Retorna à posição original ao clicar */
-}
-
-/* Estilo para links de ação (Sair, Cadastre-se aqui) */
-a.button-link {
-    display: inline-block;
-    background-color: var(--secondary-color);
-    color: #FFFFFF;
-    padding: 10px 20px;
-    border-radius: 20px;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 15px;
-    transition: background-color 0.3s ease;
-}
-
-a.button-link:hover {
-    background-color: #E69A3F;
-    text-decoration: none;
-}
-
-/* Ajustes para a página de login/registro */
-.container h1 {
-    font-size: 2.5em;
-    margin-bottom: 30px;
-}
-
-.form-group input {
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.form-group input:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 5px rgba(var(--primary-color), 0.5);
-    outline: none;
-}
-
-/* Mensagens Flash mais visíveis */
-.flash-message {
-    background-color: #FFDDC1; /* Cor mais suave para mensagens */
-    color: #A0522D; /* Marrom para o texto */
-    border-color: #FFC080;
-    font-weight: bold;
+/* Página de Boas-Vindas */
+.welcome-container {
     text-align: center;
+    padding-top: 100px;
+    padding-bottom: 100px;
 }
