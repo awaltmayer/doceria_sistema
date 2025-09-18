@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cardápio - Doceria</title>
+    <!-- A forma correta de chamar o CSS com Flask -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <header>
         <h1>Nosso Cardápio de Trufas</h1>
         <p>Olá, Augusto Lindo! Escolha suas trufas favoritas:</p>
-        <!-- Botão para ver o carrinho -->
         <a href="{{ url_for('ver_carrinho') }}" class="button-carrinho">Ver Carrinho / Finalizar Compra</a>
     </header>
 
     <main class="cardapio-container">
-        <!-- Exibe mensagens flash (como "item adicionado!") -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 <ul class="flashes">
@@ -29,13 +28,12 @@
         <div class="trufas-grid">
             {% for trufa in trufas %}
             <div class="trufa-card">
-                <!-- Usamos url_for para o caminho da imagem, é mais seguro -->
+                <!-- A forma correta de chamar as imagens com Flask -->
                 <img src="{{ url_for('static', filename=trufa.image_url) }}" alt="Foto da trufa de {{ trufa.nome }}">
                 <h2>{{ trufa.nome }}</h2>
                 <p>{{ trufa.descricao }}</p>
                 <p class="preco">Preço: R$ {{ "%.2f"|format(trufa.preco) }}</p>
 
-                <!-- Formulário individual para adicionar cada trufa ao carrinho -->
                 <form method="POST" action="{{ url_for('adicionar_carrinho') }}">
                     <input type="hidden" name="trufa_id" value="{{ trufa.id }}">
                     <label for="quantidade-{{ trufa.id }}">Quantidade:</label>
