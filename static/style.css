@@ -1,213 +1,135 @@
-/* Reset Básico e Fontes */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&display=swap');
+/* Importar Fontes do Google */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500&display=swap');
 
+/* Reset Básico e Cores */
 :root {
-    --cor-principal: #8D5B4C;
-    --cor-secundaria: #E4D4C8;
-    --cor-fundo: #F9F5F2;
-    --cor-texto: #4A3F35;
-    --cor-sucesso: #4CAF50;
-    --cor-info: #2196F3;
-    --cor-perigo: #f44336;
+    --background-color: #FDF8F0; /* Creme suave */
+    --text-color: #4A2C2A; /* Castanho chocolate */
+    --primary-color: #D9AAB7; /* Rosa suave */
+    --border-color: #dcd1c0;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--cor-fundo);
-    color: var(--cor-texto);
-    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     padding: 20px;
-    line-height: 1.6;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-}
-
-header {
+/* Estrutura do Cartão de Login */
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     text-align: center;
-    margin-bottom: 40px;
-    border-bottom: 2px solid var(--cor-secundaria);
-    padding-bottom: 20px;
 }
 
 header h1 {
     font-family: 'Playfair Display', serif;
-    color: var(--cor-principal);
     font-size: 2.5rem;
     margin-bottom: 10px;
 }
 
-/* Botões */
-.button-principal, button {
-    background-color: var(--cor-principal);
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+header p {
     font-size: 1rem;
+    color: #8a7a78;
+    margin-bottom: 30px;
 }
 
-.button-principal:hover, button:hover {
-    background-color: #6a4539;
-    transform: translateY(-2px);
-}
-
-.button-carrinho {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #fff;
-    color: var(--cor-principal);
-    border: 2px solid var(--cor-principal);
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.button-carrinho:hover {
-    background-color: var(--cor-principal);
-    color: #fff;
-}
-
-/* Grid do Cardápio */
-.trufas-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
-
-.trufa-card {
-    background-color: var(--cor-fundo);
-    border: 1px solid var(--cor-secundaria);
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.trufa-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-}
-
-.trufa-card img {
-    max-width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-
-.trufa-card h2 {
-    font-family: 'Playfair Display', serif;
-    color: var(--cor-principal);
-    margin: 10px 0;
-}
-
-.trufa-card .preco {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--cor-texto);
-    margin: 10px 0;
-}
-
-/* Formulários */
-.form-group {
-    margin: 15px 0;
+/* Formulário */
+.auth-form {
+    width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+    flex-direction: column;
 }
 
-input[type="number"], input[type="text"], input[type="tel"], textarea {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid var(--cor-secundaria);
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-input[type="number"] {
-    width: 80px;
-}
-
-/* Página do Carrinho e Obrigado */
-.carrinho-tabela {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 30px 0;
-}
-
-.carrinho-tabela th, .carrinho-tabela td {
-    padding: 15px;
+.form-group {
     text-align: left;
-    border-bottom: 1px solid var(--cor-secundaria);
+    margin-bottom: 20px;
 }
 
-.carrinho-tabela th {
-    background-color: var(--cor-fundo);
-    font-weight: 600;
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
 }
 
-.carrinho-tabela tfoot td {
-    font-size: 1.2rem;
-    font-weight: 700;
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.checkout-form {
-    background-color: var(--cor-fundo);
-    padding: 30px;
-    border-radius: 12px;
-    margin-top: 30px;
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(217, 170, 183, 0.2);
 }
 
-.obrigado-container {
-    text-align: center;
-    padding: 40px 0;
-}
-
-.obrigado-container .endereco {
-    background: #eee;
+button {
     padding: 15px;
-    border-radius: 8px;
-    display: inline-block;
-    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--text-color);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-/* Mensagens Flash */
+button:hover {
+    background-color: #3b2321;
+}
+
+/* Links e Mensagens */
+.auth-switch {
+    margin-top: 25px;
+    font-size: 0.9rem;
+}
+
+.auth-switch a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
 .flashes {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
+    margin-bottom: 20px;
 }
-.flash {
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    color: white;
-}
-.flash.success { background-color: var(--cor-sucesso); }
-.flash.info { background-color: var(--cor-info); }
-.flash.danger { background-color: var(--cor-perigo); }
 
-/* Página de Boas-Vindas */
-.welcome-container {
-    text-align: center;
-    padding-top: 100px;
-    padding-bottom: 100px;
+.flash {
+    padding: 10px;
+    border-radius: 4px;
+    color: var(--white);
 }
+
+.flash.success { background-color: #28a745; }
+.flash.danger { background-color: #dc3545; }
+.flash.warning { background-color: #ffc107; color: #333;}
+.flash.info { background-color: #17a2b8; }
+

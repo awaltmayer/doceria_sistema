@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container login-container">
+    <div class="auth-container">
         <header>
             <h1>Bem-vindo à Doceria</h1>
             <p>Por favor, faça login para continuar</p>
@@ -23,7 +23,7 @@
             {% endif %}
         {% endwith %}
 
-        <form method="POST" action="{{ url_for('login') }}" class="login-form">
+        <form method="POST" action="{{ url_for('login') }}" class="auth-form">
             <div class="form-group">
                 <label for="username">Utilizador</label>
                 <input type="text" id="username" name="username" required>
