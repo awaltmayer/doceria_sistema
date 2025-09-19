@@ -1,40 +1,25 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registo - Doceria</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="auth-container">
-        <header>
-            <h1>Crie a sua Conta</h1>
-        </header>
-        
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flashes">
-                {% for category, message in messages %}
-                    <div class="flash {{ category }}">{{ message }}</div>
-                {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
+{% extends "layout.html" %}
 
-        <form method="POST" action="{{ url_for('register') }}" class="auth-form">
-            <div class="form-group">
-                <label for="username">Nome de Utilizador</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Criar Conta</button>
-        </form>
-        <p class="auth-switch">Já tem uma conta? <a href="{{ url_for('login') }}">Faça login aqui</a>.</p>
-    </div>
-</body>
-</html>
+{% block title %}Registo - Doceria{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <header>
+        <h1>Crie a sua Conta</h1>
+    </header>
+    
+    <form method="POST" action="{{ url_for('register') }}" class="auth-form">
+        <div class="form-group">
+            <label for="username">Nome de Utilizador</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Criar Conta</button>
+    </form>
+    <p class="auth-switch">Já tem uma conta? <a href="{{ url_for('login') }}">Faça login aqui</a>.</p>
+</div>
+{% endblock %}
 

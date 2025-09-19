@@ -1,31 +1,33 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedido Confirmado! - Doceria</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Obrigado pelo seu Pedido!</h1>
-        </header>
-        <main class="obrigado-container">
-            <p>Olá, <strong>{{ pedido.nome_cliente }}</strong>!</p>
-            <p>Recebemos o seu pedido nº {{ pedido.id }} no valor total de <strong>R$ {{ "%.2f"|format(pedido.total) }}</strong>.</p>
-            <p>Entraremos em contato em breve pelo telefone {{ pedido.telefone_cliente }} para combinar os detalhes da entrega no endereço:</p>
-            <p class="endereco">{{ pedido.endereco_cliente }}</p>
-            
-            <h3>Resumo do Pedido:</h3>
-            <ul>
-                {% for item in pedido.itens %}
-                <li>{{ item.quantidade }}x {{ item.trufa_nome }}</li>
-                {% endfor %}
-            </ul>
+{% extends "layout.html" %}
 
-            <a href="{{ url_for('cardapio') }}" class="button-principal">Fazer um Novo Pedido</a>
-        </main>
+{% block title %}Pedido Confirmado - Doceria{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <header class="page-header">
+        <h1>Obrigado pelo seu Pedido!</h1>
+        <p>Recebemos o seu pedido #{{ pedido.id }} e já estamos a prepará-lo.</p>
+        <nav>
+            <a href="{{ url_for('cardapio') }}" class="button">Continuar a Comprar</a>
+            <a href="{{ url_for('logout') }}" class="button secondary">Logout</a>
+        </nav>
+    </header>
+
+    <div class="pedido-resumo">
+        <h2>Resumo do Pedido</h2>
+        <ul class="carrinho-lista">
+            {% for item in pedido.itens %}
+            <li>
+                <span class="item-nome">{{ item.trufa_nome }}</span>
+                <span class="item-detalhes">{{ item.quantidade }} x R$ {{ "%.2f"|format(item.preco_unitario) }}</span>
+                <span class="item-subtotal">R$ {{ "%.2f"|format(item.quantidade * item.preco_unitario) }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="carrinho-total">
+            <strong>Total: R$ {{ "%.2f"|format(pedido.total) }}</strong>
+        </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}
+

@@ -1,135 +1,258 @@
-/* Importar Fontes do Google */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500&display=swap');
+/* --- Importação de Fontes do Google --- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap');
 
-/* Reset Básico e Cores */
+/* --- Variáveis de Cores --- */
 :root {
-    --background-color: #FDF8F0; /* Creme suave */
-    --text-color: #4A2C2A; /* Castanho chocolate */
-    --primary-color: #D9AAB7; /* Rosa suave */
-    --border-color: #dcd1c0;
-    --white: #ffffff;
+    --cor-fundo: #FDF8F0; /* Creme claro */
+    --cor-texto: #4A2C2A; /* Castanho chocolate escuro */
+    --cor-primaria: #D9AAB7; /* Rosa suave */
+    --cor-secundaria: #EFEBE5; /* Cinza claro/Bege */
+    --cor-branca: #FFFFFF;
+    --sombra-caixa: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
+/* --- Estilos Globais e Reset --- */
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
-    padding: 20px;
+    padding: 2rem;
 }
 
-/* Estrutura do Cartão de Login */
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 0.75rem;
+}
+
+a {
+    color: var(--cor-primaria);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* --- Layout Base e Navegação --- */
+.page-container {
+    width: 100%;
+    max-width: 960px;
+    background: var(--cor-branca);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--sombra-caixa);
+}
+
+.page-header {
+    border-bottom: 1px solid var(--cor-secundaria);
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.page-header h1 {
+    margin-bottom: 0;
+}
+
+.page-header nav {
+    display: flex;
+    gap: 1rem;
+}
+
+/* --- Componentes de Botão --- */
+.button {
+    display: inline-block;
+    background-color: var(--cor-primaria);
+    color: var(--cor-branca);
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #c893a2;
+    text-decoration: none;
+}
+
+.button.secondary {
+    background-color: var(--cor-secundaria);
+    color: var(--cor-texto);
+}
+
+.button.secondary:hover {
+    background-color: #e0d9cf;
+}
+
+
+/* --- Formulários de Autenticação (Login/Registo) --- */
 .auth-container {
     width: 100%;
     max-width: 400px;
-    padding: 40px;
-    background-color: var(--white);
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    margin: 2rem auto;
     text-align: center;
 }
 
-header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-}
-
-header p {
-    font-size: 1rem;
-    color: #8a7a78;
-    margin-bottom: 30px;
-}
-
-/* Formulário */
 .auth-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+    background-color: var(--cor-branca);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--sombra-caixa);
 }
 
 .form-group {
+    margin-bottom: 1.5rem;
     text-align: left;
-    margin-bottom: 20px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
 }
 
 .form-group input {
     width: 100%;
-    padding: 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
+    padding: 0.75rem;
+    border: 1px solid var(--cor-secundaria);
+    border-radius: 5px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;
-    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.form-group input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(217, 170, 183, 0.2);
+.auth-form button {
+    width: 100%;
 }
 
-button {
-    padding: 15px;
+.auth-switch-link {
+    margin-top: 1.5rem;
+}
+
+/* --- Mensagens Flash --- */
+.flash-messages {
+    list-style: none;
+    margin-bottom: 1.5rem;
+}
+
+.flash-messages li {
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+}
+
+.flash-messages .success { background-color: #d4edda; color: #155724; }
+.flash-messages .danger { background-color: #f8d7da; color: #721c24; }
+.flash-messages .info { background-color: #d1ecf1; color: #0c5460; }
+
+
+/* --- Grelha do Cardápio --- */
+.trufas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.trufa-card {
+    background: #fff;
+    border: 1px solid var(--cor-secundaria);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: var(--sombra-caixa);
+}
+
+.trufa-card .descricao {
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.trufa-card .preco {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--cor-primaria);
+    margin-bottom: 1rem;
+}
+
+.form-group-inline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-group-inline input {
+    width: 60px;
+    text-align: center;
+    padding: 0.5rem;
+    border: 1px solid var(--cor-secundaria);
+    border-radius: 5px;
+}
+
+.form-group-inline button {
+    background-color: var(--cor-primaria);
+    color: white;
     border: none;
-    border-radius: 4px;
-    background-color: var(--text-color);
-    color: var(--white);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
-button:hover {
-    background-color: #3b2321;
+/* --- Página do Carrinho e Obrigado --- */
+.carrinho-container, .pedido-resumo {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    border: 1px solid var(--cor-secundaria);
 }
 
-/* Links e Mensagens */
-.auth-switch {
-    margin-top: 25px;
-    font-size: 0.9rem;
+.carrinho-lista {
+    list-style: none;
+    margin-bottom: 1.5rem;
 }
 
-.auth-switch a {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 500;
+.carrinho-lista li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--cor-secundaria);
 }
 
-.auth-switch a:hover {
-    text-decoration: underline;
+.carrinho-lista li:last-child {
+    border-bottom: none;
 }
 
-.flashes {
-    margin-bottom: 20px;
+.carrinho-total {
+    text-align: right;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
 }
 
-.flash {
-    padding: 10px;
-    border-radius: 4px;
-    color: var(--white);
+.checkout-form {
+    text-align: center;
 }
 
-.flash.success { background-color: #28a745; }
-.flash.danger { background-color: #dc3545; }
-.flash.warning { background-color: #ffc107; color: #333;}
-.flash.info { background-color: #17a2b8; }
+.empty-message {
+    text-align: center;
+    padding: 2rem;
+    font-style: italic;
+    color: #6c757d;
+}
 

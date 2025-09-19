@@ -4,12 +4,12 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 
-# Configuração explícita das pastas para a Vercel
+# --- Configuração da Aplicação ---
 app = Flask(__name__, template_folder='templates', static_folder='static')
-app.config['SECRET_KEY'] = 'uma_chave_secreta_muito_segura_para_sessoes'
+app.config['SECRET_KEY'] = os.urandom(24) # Chave secreta mais segura
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# --- CONFIGURAÇÃO DA BASE DE DADOS ---
+# --- Configuração da Base de Dados (Vercel Postgres ou SQLite local) ---
 DATABASE_URL = os.environ.get('POSTGRES_URL')
 
 if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
@@ -23,11 +23,17 @@ if not DATABASE_URL:
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 db = SQLAlchemy(app)
 
-# --- Modelos ---
+# --- Modelos da Base de Dados ---
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
 class Trufa(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -35,13 +41,11 @@ class Trufa(db.Model):
     descricao = db.Column(db.String(255))
     preco = db.Column(db.Float, nullable=False)
 
-# (Os modelos Pedido e ItemPedido continuam iguais)
 class Pedido(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nome_cliente = db.Column(db.String(100), nullable=False)
-    telefone_cliente = db.Column(db.String(20), nullable=False)
-    endereco_cliente = db.Column(db.String(255), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     total = db.Column(db.Float, nullable=False)
+    user = db.relationship('User', backref=db.backref('pedidos', lazy=True))
     itens = db.relationship('ItemPedido', backref='pedido', lazy=True, cascade="all, delete-orphan")
 
 class ItemPedido(db.Model):
@@ -51,17 +55,16 @@ class ItemPedido(db.Model):
     quantidade = db.Column(db.Integer, nullable=False)
     preco_unitario = db.Column(db.Float, nullable=False)
 
-# --- Funções de Autenticação ---
+# --- Decorador para Proteger Rotas ---
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'user_id' not in session:
-            flash('Por favor, faça login para aceder a esta página.', 'warning')
             return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorated_function
 
-# --- Rotas de Login/Registo ---
+# --- Rotas de Autenticação ---
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -69,10 +72,10 @@ def login():
         password = request.form.get('password')
         user = User.query.filter_by(username=username).first()
 
-        if user and check_password_hash(user.password_hash, password):
+        if user and user.check_password(password):
             session['user_id'] = user.id
             session['username'] = user.username
-            flash('Login efetuado com sucesso!', 'success')
+            flash('Login bem-sucedido!', 'success')
             return redirect(url_for('cardapio'))
         else:
             flash('Utilizador ou password incorretos.', 'danger')
@@ -83,34 +86,29 @@ def register():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        
-        user_exists = User.query.filter_by(username=username).first()
-        if user_exists:
-            flash('Este nome de utilizador já existe.', 'warning')
-            return redirect(url_for('register'))
-            
-        hashed_password = generate_password_hash(password)
-        new_user = User(username=username, password_hash=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
-        
-        flash('Conta criada com sucesso! Por favor, faça login.', 'success')
-        return redirect(url_for('login'))
+
+        if User.query.filter_by(username=username).first():
+            flash('Este nome de utilizador já existe.', 'danger')
+        else:
+            new_user = User(username=username)
+            new_user.set_password(password)
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Conta criada com sucesso! Por favor, faça login.', 'success')
+            return redirect(url_for('login'))
     return render_template('register.html')
 
 @app.route('/logout')
 def logout():
     session.clear()
-    flash('Logout efetuado com sucesso.', 'info')
+    flash('Sessão terminada.', 'info')
     return redirect(url_for('login'))
 
-# --- Rotas da Aplicação ---
+# --- Rotas da Loja ---
 @app.route('/')
+@login_required
 def index():
-    # A página inicial agora verifica se o utilizador está logado
-    if 'user_id' in session:
-        return redirect(url_for('cardapio'))
-    return redirect(url_for('login'))
+    return redirect(url_for('cardapio'))
 
 @app.route('/cardapio')
 @login_required
@@ -118,93 +116,108 @@ def cardapio():
     trufas = Trufa.query.all()
     return render_template('cardapio.html', trufas=trufas)
 
-# (As outras rotas como adicionar_carrinho, ver_carrinho, etc., continuam iguais,
-# mas agora estarão protegidas porque o acesso ao cardápio requer login)
 @app.route('/adicionar_carrinho', methods=['POST'])
 @login_required
 def adicionar_carrinho():
     trufa_id = request.form.get('trufa_id')
-    quantidade = int(request.form.get('quantidade', 0))
+    quantidade = int(request.form.get('quantidade'))
+    
     if 'carrinho' not in session:
         session['carrinho'] = {}
-    trufa = Trufa.query.get(trufa_id)
-    if not trufa:
-        flash('Trufa não encontrada!', 'danger')
-        return redirect(url_for('cardapio'))
+    
     carrinho = session['carrinho']
     id_str = str(trufa_id)
+    
     if quantidade > 0:
-        carrinho[id_str] = {'nome': trufa.nome, 'preco': trufa.preco, 'quantidade': quantidade}
+        carrinho[id_str] = quantidade
     elif id_str in carrinho:
         del carrinho[id_str]
+        
     session['carrinho'] = carrinho
-    flash(f'{trufa.nome} atualizado no carrinho.', 'success')
     return redirect(url_for('cardapio'))
 
 @app.route('/ver_carrinho')
 @login_required
 def ver_carrinho():
-    carrinho = session.get('carrinho', {})
-    total = sum(item['preco'] * item['quantidade'] for item in carrinho.values())
-    return render_template('carrinho.html', carrinho=carrinho, total=total)
+    carrinho_session = session.get('carrinho', {})
+    itens_carrinho = []
+    total_geral = 0
+    
+    for trufa_id, quantidade in carrinho_session.items():
+        trufa = Trufa.query.get(trufa_id)
+        if trufa:
+            subtotal = trufa.preco * quantidade
+            total_geral += subtotal
+            itens_carrinho.append({
+                'id': trufa.id,
+                'nome': trufa.nome,
+                'preco': trufa.preco,
+                'quantidade': quantidade,
+                'subtotal': subtotal
+            })
+            
+    return render_template('carrinho.html', itens_carrinho=itens_carrinho, total_geral=total_geral)
 
 @app.route('/checkout', methods=['POST'])
 @login_required
 def checkout():
-    carrinho = session.get('carrinho', {})
-    if not carrinho:
-        flash('O seu carrinho está vazio.', 'warning')
-        return redirect(url_for('ver_carrinho'))
-    novo_pedido = Pedido(
-        nome_cliente=request.form.get('nome_cliente'),
-        telefone_cliente=request.form.get('telefone_cliente'),
-        endereco_cliente=request.form.get('endereco_cliente'),
-        total=sum(item['preco'] * item['quantidade'] for item in carrinho.values())
-    )
+    carrinho_session = session.get('carrinho', {})
+    if not carrinho_session:
+        return redirect(url_for('cardapio'))
+
+    total_pedido = 0
+    itens_para_pedido = []
+    for trufa_id, quantidade in carrinho_session.items():
+        trufa = Trufa.query.get(trufa_id)
+        if trufa:
+            total_pedido += trufa.preco * quantidade
+            itens_para_pedido.append({'trufa': trufa, 'quantidade': quantidade})
+
+    novo_pedido = Pedido(user_id=session['user_id'], total=total_pedido)
     db.session.add(novo_pedido)
-    for item_info in carrinho.values():
-        item_pedido = ItemPedido(
-            pedido=novo_pedido,
-            trufa_nome=item_info['nome'],
-            quantidade=item_info['quantidade'],
-            preco_unitario=item_info['preco']
+    db.session.flush()
+
+    for item in itens_para_pedido:
+        novo_item_pedido = ItemPedido(
+            pedido_id=novo_pedido.id,
+            trufa_nome=item['trufa'].nome,
+            quantidade=item['quantidade'],
+            preco_unitario=item['trufa'].preco
         )
-        db.session.add(item_pedido)
+        db.session.add(novo_item_pedido)
+    
     db.session.commit()
     session.pop('carrinho', None)
+    
     return redirect(url_for('obrigado', pedido_id=novo_pedido.id))
 
 @app.route('/obrigado/<int:pedido_id>')
 @login_required
 def obrigado(pedido_id):
-    pedido = Pedido.query.get_or_404(pedido_id)
+    pedido = Pedido.query.filter_by(id=pedido_id, user_id=session['user_id']).first_or_404()
     return render_template('obrigado.html', pedido=pedido)
 
 
-# --- Função de popular o banco (agora com a tabela User) ---
-def create_db_and_populate():
-    with app.app_context():
-        db.drop_all() # Apaga tudo para garantir uma base de dados limpa
-        db.create_all() # Cria as tabelas com a nova estrutura (com User)
-        
-        trufas = [
-            Trufa(nome='Brigadeiro', descricao='Trufa de brigadeiro tradicional', preco=5.00),
-            Trufa(nome='Ninho', descricao='Trufa de leite em pó', preco=5.00),
-            Trufa(nome='Ninho+brigadeiro', descricao='Combinação de ninho e brigadeiro', preco=5.00),
-            Trufa(nome='Sensação', descricao='Chocolate com recheio de morango', preco=5.00),
-            Trufa(nome='Coco', descricao='Trufa de coco fresco (sem acento)', preco=5.00),
-            Trufa(nome='Amendoim', descricao='Trufa de pasta de amendoim', preco=5.00)
-        ]
-        db.session.add_all(trufas)
-        db.session.commit()
-        print("Base de dados recriada e populada com sucesso!")
-
-# --- ROTA SECRETA PARA CRIAR O BANCO NA NUVEM ---
+# --- Rota Secreta para Configuração da Base de Dados ---
 @app.route('/setup-database-12345')
 def setup_database():
-    try:
-        create_db_and_populate()
-        return "Base de dados recriada com sucesso!", 200
-    except Exception as e:
-        return f"Erro ao criar a base de dados: {e}", 500
-
+    with app.app_context():
+        # Apaga tudo para garantir um estado limpo
+        db.drop_all()
+        # Cria as tabelas novamente com a estrutura correta
+        db.create_all()
+        
+        if Trufa.query.count() == 0:
+            trufas_iniciais = [
+                Trufa(nome='Brigadeiro', descricao='Trufa de brigadeiro tradicional', preco=5.00),
+                Trufa(nome='Ninho', descricao='Trufa de leite em pó', preco=5.00),
+                Trufa(nome='Ninho+Brigadeiro', descricao='Combinação de ninho e brigadeiro', preco=5.00),
+                Trufa(nome='Sensação', descricao='Chocolate com recheio de morango', preco=5.00),
+                Trufa(nome='Coco', descricao='Trufa de coco fresco', preco=5.00),
+                Trufa(nome='Amendoim', descricao='Trufa de pasta de amendoim', preco=5.00)
+            ]
+            db.session.add_all(trufas_iniciais)
+            db.session.commit()
+            return "Base de dados recriada e populada com sucesso!", 200
+        else:
+            return "Base de dados já populada.", 200

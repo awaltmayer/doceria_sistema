@@ -1,52 +1,35 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio - Doceria</title>
-    <!-- A forma mais robusta de chamar o ficheiro CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Nosso Cardápio de Trufas</h1>
-            <a href="{{ url_for('ver_carrinho') }}" class="button-carrinho">Ver Carrinho / Finalizar Compra</a>
-        </header>
+{% extends "layout.html" %}
 
-        <!-- Código para mostrar mensagens flash (alertas) -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flashes">
-                {% for category, message in messages %}
-                    <div class="flash {{ category }}">{{ message }}</div>
-                {% endfor %}
+{% block title %}Cardápio - Doceria{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <header class="page-header">
+        <h1>Nosso Cardápio</h1>
+        <p>Bem-vindo, {{ session['username'] }}!</p>
+        <nav>
+            <a href="{{ url_for('ver_carrinho') }}" class="button">Ver Carrinho</a>
+            <a href="{{ url_for('logout') }}" class="button secondary">Logout</a>
+        </nav>
+    </header>
+
+    <div class="trufas-grid">
+        {% for trufa in trufas %}
+        <div class="trufa-card">
+            <h3>{{ trufa.nome }}</h3>
+            <p class="descricao">{{ trufa.descricao }}</p>
+            <p class="preco">R$ {{ "%.2f"|format(trufa.preco) }}</p>
+            <form method="POST" action="{{ url_for('adicionar_carrinho') }}">
+                <input type="hidden" name="trufa_id" value="{{ trufa.id }}">
+                <div class="form-group-inline">
+                    <label for="quantidade-{{ trufa.id }}">Qtd:</label>
+                    <input type="number" name="quantidade" id="quantidade-{{ trufa.id }}" value="{{ session.get('carrinho', {}).get(trufa.id|string, 0) }}" min="0">
+                    <button type="submit">Atualizar</button>
                 </div>
-            {% endif %}
-        {% endwith %}
-
-        <main class="trufas-grid">
-            {% for trufa in trufas %}
-            <div class="trufa-card">
-                <!-- A forma mais robusta de chamar os ficheiros de imagem -->
-                <img src="{{ url_for('static', filename=trufa.image_url) }}" alt="Foto da trufa de {{ trufa.nome }}">
-                <h2>{{ trufa.nome }}</h2>
-                <p>{{ trufa.descricao }}</p>
-                <p class="preco">Preço: R$ {{ "%.2f"|format(trufa.preco) }}</p>
-
-                <form method="POST" action="{{ url_for('adicionar_carrinho') }}">
-                    <input type="hidden" name="trufa_id" value="{{ trufa.id }}">
-                    <div class="form-group">
-                        <label for="quantidade-{{ trufa.id }}">Quantidade:</label>
-                        <input type="number" id="quantidade-{{ trufa.id }}" name="quantidade" value="0" min="0" required>
-                    </div>
-                    <button type="submit">Adicionar ao Carrinho</button>
-                </form>
-            </div>
-            {% else %}
-            <p>Nenhuma trufa encontrada no cardápio no momento.</p>
-            {% endfor %}
-        </main>
+            </form>
+        </div>
+        {% endfor %}
     </div>
-</body>
-</html>
+</div>
+{% endblock %}
+
