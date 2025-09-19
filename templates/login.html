@@ -3,24 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Trufaria</title>
-    <link rel="stylesheet" href="{{ url_for("static", filename="style.css") }}">
+    <title>Login - Doceria</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Login na Trufaria</h1>
-        <form method="POST" action="{{ url_for("login") }}">
+    <div class="container login-container">
+        <header>
+            <h1>Bem-vindo à Doceria</h1>
+            <p>Por favor, faça login para continuar</p>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flashes">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}" class="login-form">
             <div class="form-group">
-                <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email" required>
+                <label for="username">Utilizador</label>
+                <input type="text" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="password">Senha:</label>
+                <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
             <button type="submit">Entrar</button>
         </form>
-        <p>Não tem uma conta? <a href="{{ url_for("register") }}">Cadastre-se aqui</a>.</p>
+        <p class="auth-switch">Não tem uma conta? <a href="{{ url_for('register') }}">Registe-se aqui</a>.</p>
     </div>
 </body>
 </html>

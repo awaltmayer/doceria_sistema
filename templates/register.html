@@ -3,32 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro - Trufaria</title>
-    <link rel="stylesheet" href="{{ url_for("static", filename="style.css") }}">
+    <title>Registo - Doceria</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Cadastre-se na Trufaria</h1>
-        <form method="POST" action="{{ url_for("register") }}">
+    <div class="container login-container">
+        <header>
+            <h1>Crie a sua Conta</h1>
+        </header>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flashes">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('register') }}" class="login-form">
             <div class="form-group">
-                <label for="username">Nome de Usuário:</label>
+                <label for="username">Nome de Utilizador</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="phone">Telefone:</label>
-                <input type="text" id="phone" name="phone" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Senha:</label>
+                <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">Registrar</button>
+            <button type="submit">Criar Conta</button>
         </form>
-        <p>Já tem uma conta? <a href="{{ url_for("login") }}">Faça login aqui</a>.</p>
+        <p class="auth-switch">Já tem uma conta? <a href="{{ url_for('login') }}">Faça login aqui</a>.</p>
     </div>
 </body>
 </html>
