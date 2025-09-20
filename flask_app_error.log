@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "/home/user/webapp/app.py", line 2, in <module>
+    from flask import Flask, render_template, request, redirect, url_for, flash, session
+ModuleNotFoundError: No module named 'flask'
+Traceback (most recent call last):
+  File "/home/user/webapp/app.py", line 2, in <module>
+    from flask import Flask, render_template, request, redirect, url_for, flash, session
+ModuleNotFoundError: No module named 'flask'
+Traceback (most recent call last):
+  File "/home/user/webapp/app.py", line 2, in <module>
+    from flask import Flask, render_template, request, redirect, url_for, flash, session
+ModuleNotFoundError: No module named 'flask'
+Traceback (most recent call last):
+  File "/home/user/webapp/app.py", line 2, in <module>
+    from flask import Flask, render_template, request, redirect, url_for, flash, session
+ModuleNotFoundError: No module named 'flask'
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://169.254.0.21:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with watchdog (inotify)
+ * Debugger is active!
+ * Debugger PIN: 903-792-757
+10.12.59.22 - - [20/Sep/2025 00:10:36] "[33mGET /robots.txt HTTP/1.1[0m" 404 -
+10.12.59.22 - - [20/Sep/2025 00:10:36] "GET /setup-database-12345 HTTP/1.1" 200 -
+10.12.59.22 - - [20/Sep/2025 00:10:42] "[32mGET / HTTP/1.1[0m" 302 -
+10.12.59.22 - - [20/Sep/2025 00:10:42] "GET /login HTTP/1.1" 200 -
+10.12.59.22 - - [20/Sep/2025 00:10:43] "GET /static/style.css HTTP/1.1" 200 -
+10.12.59.22 - - [20/Sep/2025 00:10:43] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -

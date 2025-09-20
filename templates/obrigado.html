@@ -1,31 +1,68 @@
 {% extends "layout.html" %}
 
-{% block title %}Pedido Confirmado - Doceria{% endblock %}
+{% block title %}Pedido Confirmado - Doce Trufa{% endblock %}
 
 {% block content %}
 <div class="page-container">
     <header class="page-header">
-        <h1>Obrigado pelo seu Pedido!</h1>
-        <p>Recebemos o seu pedido #{{ pedido.id }} e já estamos a prepará-lo.</p>
+        <div class="header-content">
+            <h1>🎉 Pedido Confirmado!</h1>
+            <p>Seu pedido #{{ pedido.id }} foi recebido com sucesso e já estamos preparando suas deliciosas trufas!</p>
+        </div>
         <nav>
-            <a href="{{ url_for('cardapio') }}" class="button">Continuar a Comprar</a>
-            <a href="{{ url_for('logout') }}" class="button secondary">Logout</a>
+            <a href="{{ url_for('cardapio') }}" class="button">
+                <span>🍫 Fazer Novo Pedido</span>
+            </a>
+            <a href="{{ url_for('logout') }}" class="button secondary">
+                <span>👋 Logout</span>
+            </a>
         </nav>
     </header>
 
     <div class="pedido-resumo">
-        <h2>Resumo do Pedido</h2>
-        <ul class="carrinho-lista">
-            {% for item in pedido.itens %}
-            <li>
-                <span class="item-nome">{{ item.trufa_nome }}</span>
-                <span class="item-detalhes">{{ item.quantidade }} x R$ {{ "%.2f"|format(item.preco_unitario) }}</span>
-                <span class="item-subtotal">R$ {{ "%.2f"|format(item.quantidade * item.preco_unitario) }}</span>
-            </li>
-            {% endfor %}
-        </ul>
-        <div class="carrinho-total">
-            <strong>Total: R$ {{ "%.2f"|format(pedido.total) }}</strong>
+        <div class="success-animation">
+            <div class="success-icon">✅</div>
+            <h2>Obrigado pela preferência!</h2>
+            <p class="success-message">Suas trufas artesanais estão sendo preparadas com muito carinho.</p>
+        </div>
+        
+        <div class="pedido-detalhes">
+            <div class="pedido-header">
+                <h3>📋 Resumo do Pedido #{{ pedido.id }}</h3>
+                <div class="pedido-status">
+                    <span class="status-badge">🔥 Em preparação</span>
+                </div>
+            </div>
+            
+            <ul class="carrinho-lista">
+                {% for item in pedido.itens %}
+                <li class="pedido-item">
+                    <div class="item-info">
+                        <h4 class="item-nome">🍫 {{ item.trufa_nome }}</h4>
+                        <p class="item-detalhes">
+                            <span class="quantidade">{{ item.quantidade }} unidade{% if item.quantidade > 1 %}s{% endif %}</span>
+                            <span class="preco-unit">R$ {{ "%.2f"|format(item.preco_unitario) }} cada</span>
+                        </p>
+                    </div>
+                    <div class="item-subtotal">
+                        <strong>R$ {{ "%.2f"|format(item.quantidade * item.preco_unitario) }}</strong>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            
+            <div class="pedido-total">
+                💰 <strong>Total Pago: R$ {{ "%.2f"|format(pedido.total) }}</strong>
+            </div>
+        </div>
+        
+        <div class="next-steps">
+            <h4>🚀 Próximos Passos:</h4>
+            <ul class="steps-list">
+                <li>✨ Suas trufas estão sendo preparadas artesanalmente</li>
+                <li>📞 Entraremos em contato para organizar a entrega</li>
+                <li>🎁 Em breve você estará saboreando nossas delícias!</li>
+            </ul>
         </div>
     </div>
 </div>

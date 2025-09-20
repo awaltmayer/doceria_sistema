@@ -1,35 +1,77 @@
 {% extends "layout.html" %}
 
-{% block title %}Cardápio - Doceria{% endblock %}
+{% block title %}Cardápio - Doce Trufa{% endblock %}
 
 {% block content %}
 <div class="page-container">
     <header class="page-header">
-        <h1>Nosso Cardápio</h1>
-        <p>Bem-vindo, {{ session['username'] }}!</p>
+        <div class="header-content">
+            <h1>🍫 Nosso Cardápio</h1>
+            <p>Olá, {{ session['username'] }}! Escolha suas trufas favoritas</p>
+        </div>
         <nav>
-            <a href="{{ url_for('ver_carrinho') }}" class="button">Ver Carrinho</a>
-            <a href="{{ url_for('logout') }}" class="button secondary">Logout</a>
+            <a href="{{ url_for('ver_carrinho') }}" class="button">
+                <span>🛒 Ver Carrinho</span>
+            </a>
+            <a href="{{ url_for('logout') }}" class="button secondary">
+                <span>👋 Logout</span>
+            </a>
         </nav>
     </header>
 
     <div class="trufas-grid">
         {% for trufa in trufas %}
         <div class="trufa-card">
-            <h3>{{ trufa.nome }}</h3>
-            <p class="descricao">{{ trufa.descricao }}</p>
-            <p class="preco">R$ {{ "%.2f"|format(trufa.preco) }}</p>
-            <form method="POST" action="{{ url_for('adicionar_carrinho') }}">
-                <input type="hidden" name="trufa_id" value="{{ trufa.id }}">
-                <div class="form-group-inline">
-                    <label for="quantidade-{{ trufa.id }}">Qtd:</label>
-                    <input type="number" name="quantidade" id="quantidade-{{ trufa.id }}" value="{{ session.get('carrinho', {}).get(trufa.id|string, 0) }}" min="0">
-                    <button type="submit">Atualizar</button>
-                </div>
-            </form>
+            <div class="trufa-image">
+                {% set image_map = {
+                    'Brigadeiro': 'brigadeiro.jpg',
+                    'Ninho': 'ninho.jpg', 
+                    'Ninho+Brigadeiro': 'ninho_brigadeiro.jpg',
+                    'Sensação': 'sensacao.jpg',
+                    'Coco': 'coco.jpg',
+                    'Amendoim': 'amendoim.jpg'
+                } %}
+                {% if trufa.nome in image_map %}
+                    <img src="{{ url_for('static', filename=image_map[trufa.nome]) }}" 
+                         alt="{{ trufa.nome }}" 
+                         style="width: 100%; height: 100%; object-fit: cover; border-radius: 0.75rem;">
+                {% else %}
+                    🍫
+                {% endif %}
+            </div>
+            
+            <div class="trufa-content">
+                <h3>{{ trufa.nome }}</h3>
+                <p class="descricao">{{ trufa.descricao }}</p>
+                <p class="preco">R$ {{ "%.2f"|format(trufa.preco) }}</p>
+                
+                <form method="POST" action="{{ url_for('adicionar_carrinho') }}">
+                    <input type="hidden" name="trufa_id" value="{{ trufa.id }}">
+                    <div class="form-group-inline">
+                        <label for="quantidade-{{ trufa.id }}">Quantidade:</label>
+                        <input type="number" 
+                               name="quantidade" 
+                               id="quantidade-{{ trufa.id }}" 
+                               value="{{ session.get('carrinho', {}).get(trufa.id|string, 0) }}" 
+                               min="0" 
+                               max="20">
+                        <button type="submit" class="btn-add">
+                            <span>Atualizar</span>
+                            <i class="btn-icon">🛒</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
         {% endfor %}
     </div>
+    
+    {% if not trufas %}
+    <div class="empty-message">
+        <h3>😔 Nenhuma trufa disponível no momento</h3>
+        <p>Volte em breve para ver nossas deliciosas opções!</p>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
 

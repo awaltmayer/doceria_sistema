@@ -1,0 +1,15 @@
+2025-09-20 00:10:00,546 INFO RPC interface 'supervisor' initialized
+2025-09-20 00:10:00,546 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2025-09-20 00:10:00,548 INFO daemonizing the supervisord process
+2025-09-20 00:10:00,548 INFO supervisord started with pid 1767
+2025-09-20 00:10:01,552 INFO spawned: 'flask_app' with pid 1769
+2025-09-20 00:10:01,579 WARN exited: flask_app (exit status 1; not expected)
+2025-09-20 00:10:02,582 INFO spawned: 'flask_app' with pid 1771
+2025-09-20 00:10:02,609 WARN exited: flask_app (exit status 1; not expected)
+2025-09-20 00:10:04,904 INFO spawned: 'flask_app' with pid 1777
+2025-09-20 00:10:04,931 WARN exited: flask_app (exit status 1; not expected)
+2025-09-20 00:10:07,937 INFO spawned: 'flask_app' with pid 1789
+2025-09-20 00:10:07,964 WARN exited: flask_app (exit status 1; not expected)
+2025-09-20 00:10:08,966 INFO gave up: flask_app entered FATAL state, too many start retries too quickly
+2025-09-20 00:10:24,158 INFO spawned: 'flask_app' with pid 1864
+2025-09-20 00:10:25,432 INFO success: flask_app entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

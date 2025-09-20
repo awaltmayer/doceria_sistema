@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %}Registro - Doce Trufa{% endblock %}
+{% block title %}Login - Doce Trufa{% endblock %}
 
 {% block content %}
 <div class="auth-page">
@@ -8,22 +8,22 @@
         <div class="auth-header">
             <div class="logo">
                 <h1>🍫 Doce Trufa</h1>
-                <p>Crie sua conta e comece a saborear</p>
+                <p>Suas trufas favoritas em um só lugar</p>
             </div>
         </div>
         
         <div class="auth-form">
-            <h2>Criar nova conta</h2>
-            <p class="auth-subtitle">Junte-se à nossa comunidade de amantes de chocolate</p>
+            <h2>Entre na sua conta</h2>
+            <p class="auth-subtitle">Acesse seu cardápio personalizado</p>
             
-            <form method="POST" action="{{ url_for('register') }}">
+            <form method="POST">
                 <div class="form-group">
                     <label for="username">
                         <i class="icon">👤</i>
                         Nome de usuário
                     </label>
                     <input type="text" name="username" id="username" required 
-                           placeholder="Escolha um nome de usuário">
+                           placeholder="Digite seu nome de usuário">
                 </div>
                 
                 <div class="form-group">
@@ -32,12 +32,12 @@
                         Senha
                     </label>
                     <input type="password" name="password" id="password" required 
-                           placeholder="Crie uma senha segura">
+                           placeholder="Digite sua senha">
                 </div>
                 
                 <button type="submit" class="btn-primary">
-                    <span>Criar Conta</span>
-                    <i class="btn-icon">✨</i>
+                    <span>Entrar</span>
+                    <i class="btn-icon">→</i>
                 </button>
             </form>
             
@@ -46,9 +46,9 @@
             </div>
             
             <div class="auth-switch">
-                <p>Já tem uma conta?</p>
-                <a href="{{ url_for('login') }}" class="btn-secondary">
-                    Fazer login
+                <p>Ainda não tem conta?</p>
+                <a href="{{ url_for('register') }}" class="btn-secondary">
+                    Criar nova conta
                 </a>
             </div>
         </div>
@@ -59,4 +59,3 @@
     </div>
 </div>
 {% endblock %}
-
