@@ -1,40 +1,53 @@
 {% extends "layout.html" %}
 
-{% block title %}Carrinho - Doceria{% endblock %}
+{% block title %}Carrinho de Compras - Doceria{% endblock %}
 
 {% block content %}
-<div class="page-container">
-    <header class="page-header">
+<div class="shop-container">
+    <header class="shop-header">
         <h1>Seu Carrinho de Compras</h1>
-        <nav>
-            <a href="{{ url_for('cardapio') }}" class="button secondary">Voltar ao Cardápio</a>
-            <a href="{{ url_for('logout') }}" class="button secondary">Logout</a>
-        </nav>
+        <div class="header-links">
+            <a href="{{ url_for('cardapio') }}">Voltar ao Cardápio</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
     </header>
 
-    {% if itens_carrinho %}
-        <div class="carrinho-container">
-            <ul class="carrinho-lista">
-                {% for item in itens_carrinho %}
-                <li>
-                    <span class="item-nome">{{ item.nome }}</span>
-                    <span class="item-detalhes">{{ item.quantidade }} x R$ {{ "%.2f"|format(item.preco) }}</span>
-                    <span class="item-subtotal">R$ {{ "%.2f"|format(item.subtotal) }}</span>
-                </li>
-                {% endfor %}
-            </ul>
-            <div class="carrinho-total">
-                <strong>Total: R$ {{ "%.2f"|format(total_geral) }}</strong>
-            </div>
+    <div class="cart-container">
+        {% if itens_carrinho %}
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Preço Unitário</th>
+                        <th>Quantidade</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in itens_carrinho %}
+                    <tr>
+                        <td>{{ item.nome }}</td>
+                        <td>R$ {{ "%.2f"|format(item.preco) }}</td>
+                        <td>{{ item.quantidade }}</td>
+                        <td>R$ {{ "%.2f"|format(item.subtotal) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
-            <form method="POST" action="{{ url_for('checkout') }}" class="checkout-form">
-                 <p>Tudo certo? Finalize seu pedido!</p>
-                <button type="submit" class="button">Finalizar Compra</button>
-            </form>
-        </div>
-    {% else %}
-        <p class="empty-message">Seu carrinho está vazio.</p>
-    {% endif %}
+            <div class="cart-summary">
+                <h2>Total: R$ {{ "%.2f"|format(total_geral) }}</h2>
+                <form method="POST" action="{{ url_for('checkout') }}">
+                    <button type="submit" class="btn">Finalizar Compra</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="cart-empty">
+                <p>O seu carrinho está vazio.</p>
+                <a href="{{ url_for('cardapio') }}" class="btn">Começar a comprar</a>
+            </div>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
 

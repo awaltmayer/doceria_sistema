@@ -3,14 +3,14 @@
 {% block title %}Cardápio - Doceria{% endblock %}
 
 {% block content %}
-<div class="page-container">
-    <header class="page-header">
+<div class="shop-container">
+    <header class="shop-header">
         <h1>Nosso Cardápio</h1>
-        <p>Bem-vindo, {{ session['username'] }}!</p>
-        <nav>
-            <a href="{{ url_for('ver_carrinho') }}" class="button">Ver Carrinho</a>
-            <a href="{{ url_for('logout') }}" class="button secondary">Logout</a>
-        </nav>
+        <div class="header-links">
+            <span>Olá, {{ session.username }}!</span>
+            <a href="{{ url_for('ver_carrinho') }}">Ver Carrinho</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
     </header>
 
     <div class="trufas-grid">
@@ -22,10 +22,10 @@
             <form method="POST" action="{{ url_for('adicionar_carrinho') }}">
                 <input type="hidden" name="trufa_id" value="{{ trufa.id }}">
                 <div class="form-group-inline">
-                    <label for="quantidade-{{ trufa.id }}">Qtd:</label>
-                    <input type="number" name="quantidade" id="quantidade-{{ trufa.id }}" value="{{ session.get('carrinho', {}).get(trufa.id|string, 0) }}" min="0">
-                    <button type="submit">Atualizar</button>
+                    <label for="quantidade-{{ trufa.id }}">Quantidade:</label>
+                    <input type="number" id="quantidade-{{ trufa.id }}" name="quantidade" value="{{ session.carrinho.get(trufa.id|string, 0) }}" min="0" class="quantidade-input">
                 </div>
+                <button type="submit" class="btn btn-small">Atualizar</button>
             </form>
         </div>
         {% endfor %}

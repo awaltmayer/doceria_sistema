@@ -3,30 +3,20 @@
 {% block title %}Pedido Confirmado - Doceria{% endblock %}
 
 {% block content %}
-<div class="page-container">
-    <header class="page-header">
-        <h1>Obrigado pelo seu Pedido!</h1>
-        <p>Recebemos o seu pedido #{{ pedido.id }} e já estamos a prepará-lo.</p>
-        <nav>
-            <a href="{{ url_for('cardapio') }}" class="button">Continuar a Comprar</a>
-            <a href="{{ url_for('logout') }}" class="button secondary">Logout</a>
-        </nav>
-    </header>
-
-    <div class="pedido-resumo">
+<div class="shop-container">
+    <div class="thank-you-card">
+        <h1>Obrigado pela sua compra!</h1>
+        <p>O seu pedido #{{ pedido.id }} foi recebido e já está a ser preparado com muito carinho.</p>
+        
         <h2>Resumo do Pedido</h2>
-        <ul class="carrinho-lista">
+        <ul class="order-summary">
             {% for item in pedido.itens %}
-            <li>
-                <span class="item-nome">{{ item.trufa_nome }}</span>
-                <span class="item-detalhes">{{ item.quantidade }} x R$ {{ "%.2f"|format(item.preco_unitario) }}</span>
-                <span class="item-subtotal">R$ {{ "%.2f"|format(item.quantidade * item.preco_unitario) }}</span>
-            </li>
+                <li>{{ item.quantidade }}x {{ item.trufa_nome }} - R$ {{ "%.2f"|format(item.preco_unitario * item.quantidade) }}</li>
             {% endfor %}
         </ul>
-        <div class="carrinho-total">
-            <strong>Total: R$ {{ "%.2f"|format(pedido.total) }}</strong>
-        </div>
+        <p class="total"><strong>Total: R$ {{ "%.2f"|format(pedido.total) }}</strong></p>
+        
+        <a href="{{ url_for('cardapio') }}" class="btn">Voltar ao Cardápio</a>
     </div>
 </div>
 {% endblock %}

@@ -106,9 +106,10 @@ def logout():
 
 # --- Rotas da Loja ---
 @app.route('/')
-@login_required
 def index():
-    return redirect(url_for('cardapio'))
+    if 'user_id' in session:
+        return redirect(url_for('cardapio'))
+    return redirect(url_for('login'))
 
 @app.route('/cardapio')
 @login_required
@@ -221,3 +222,4 @@ def setup_database():
             return "Base de dados recriada e populada com sucesso!", 200
         else:
             return "Base de dados já populada.", 200
+

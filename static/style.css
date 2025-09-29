@@ -1,17 +1,19 @@
-/* --- Importação de Fontes do Google --- */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500&display=swap');
 
-/* --- Variáveis de Cores --- */
+/* --- Variáveis de Cor --- */
 :root {
-    --cor-fundo: #FDF8F0; /* Creme claro */
-    --cor-texto: #4A2C2A; /* Castanho chocolate escuro */
-    --cor-primaria: #D9AAB7; /* Rosa suave */
-    --cor-secundaria: #EFEBE5; /* Cinza claro/Bege */
-    --cor-branca: #FFFFFF;
-    --sombra-caixa: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --background-color: #fdf8f0; /* Creme claro */
+    --text-color: #4a2c2a;       /* Castanho chocolate */
+    --primary-color: #d9aab7;    /* Rosa suave */
+    --card-background: #ffffff;  /* Branco */
+    --border-color: #e0e0e0;     /* Cinza claro */
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --info-color: #17a2b8;
 }
 
-/* --- Estilos Globais e Reset --- */
+/* --- Reset e Estilos Gerais --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -20,23 +22,21 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: var(--cor-fundo);
-    color: var(--cor-texto);
-    line-height: 1.6;
+    background-color: var(--background-color);
+    color: var(--text-color);
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex-start; /* Alinha ao topo para páginas longas */
     min-height: 100vh;
     padding: 2rem;
 }
 
 h1, h2, h3 {
     font-family: 'Playfair Display', serif;
-    margin-bottom: 0.75rem;
 }
 
 a {
-    color: var(--cor-primaria);
+    color: var(--primary-color);
     text-decoration: none;
 }
 
@@ -44,77 +44,59 @@ a:hover {
     text-decoration: underline;
 }
 
-/* --- Layout Base e Navegação --- */
-.page-container {
-    width: 100%;
-    max-width: 960px;
-    background: var(--cor-branca);
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: var(--sombra-caixa);
-}
-
-.page-header {
-    border-bottom: 1px solid var(--cor-secundaria);
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.page-header h1 {
-    margin-bottom: 0;
-}
-
-.page-header nav {
-    display: flex;
-    gap: 1rem;
-}
-
-/* --- Componentes de Botão --- */
-.button {
+/* --- Componentes --- */
+.btn {
     display: inline-block;
-    background-color: var(--cor-primaria);
-    color: var(--cor-branca);
     padding: 0.75rem 1.5rem;
-    border-radius: 5px;
+    background-color: var(--text-color);
+    color: var(--card-background);
     border: none;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
     cursor: pointer;
-    font-weight: bold;
     text-align: center;
     transition: background-color 0.3s ease;
 }
 
-.button:hover {
-    background-color: #c893a2;
+.btn:hover {
+    background-color: var(--primary-color);
+    color: var(--text-color);
     text-decoration: none;
 }
 
-.button.secondary {
-    background-color: var(--cor-secundaria);
-    color: var(--cor-texto);
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
 }
 
-.button.secondary:hover {
-    background-color: #e0d9cf;
-}
-
-
-/* --- Formulários de Autenticação (Login/Registo) --- */
-.auth-container {
+.flash-messages {
     width: 100%;
-    max-width: 400px;
-    margin: 2rem auto;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    color: #fff;
+}
+
+.flash-messages.success { background-color: var(--success-color); }
+.flash-messages.danger { background-color: var(--danger-color); }
+.flash-messages.info { background-color: var(--info-color); }
+
+/* --- Layout de Autenticação (Login/Registo) --- */
+.auth-container {
+    background-color: var(--card-background);
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
     text-align: center;
 }
 
-.auth-form {
-    background-color: var(--cor-branca);
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: var(--sombra-caixa);
+.auth-container h1 {
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
 }
 
 .form-group {
@@ -125,68 +107,73 @@ a:hover {
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .form-group input {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid var(--cor-secundaria);
+    border: 1px solid var(--border-color);
     border-radius: 5px;
     font-family: 'Montserrat', sans-serif;
 }
 
-.auth-form button {
+.auth-container .btn {
     width: 100%;
+    margin-top: 1rem;
 }
 
-.auth-switch-link {
+.auth-container p {
     margin-top: 1.5rem;
 }
 
-/* --- Mensagens Flash --- */
-.flash-messages {
-    list-style: none;
-    margin-bottom: 1.5rem;
+/* --- Layout da Loja (Cardápio, Carrinho, Obrigado) --- */
+.shop-container {
+    width: 100%;
+    max-width: 1200px;
 }
 
-.flash-messages li {
-    padding: 1rem;
-    border-radius: 5px;
-    margin-bottom: 0.5rem;
+.shop-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
 }
 
-.flash-messages .success { background-color: #d4edda; color: #155724; }
-.flash-messages .danger { background-color: #f8d7da; color: #721c24; }
-.flash-messages .info { background-color: #d1ecf1; color: #0c5460; }
+.shop-header .header-links a {
+    margin-left: 1.5rem;
+}
 
-
-/* --- Grelha do Cardápio --- */
 .trufas-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
 }
 
 .trufa-card {
-    background: #fff;
-    border: 1px solid var(--cor-secundaria);
-    padding: 1.5rem;
-    border-radius: 8px;
+    background-color: var(--card-background);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     text-align: center;
-    box-shadow: var(--sombra-caixa);
+}
+
+.trufa-card h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
 }
 
 .trufa-card .descricao {
-    color: #6c757d;
     margin-bottom: 1rem;
+    color: #666;
 }
 
 .trufa-card .preco {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--cor-primaria);
-    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
 }
 
 .form-group-inline {
@@ -194,65 +181,60 @@ a:hover {
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
+    margin-bottom: 1rem;
 }
 
-.form-group-inline input {
+.quantidade-input {
     width: 60px;
-    text-align: center;
     padding: 0.5rem;
-    border: 1px solid var(--cor-secundaria);
+    text-align: center;
+    border: 1px solid var(--border-color);
     border-radius: 5px;
 }
 
-.form-group-inline button {
-    background-color: var(--cor-primaria);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* --- Página do Carrinho e Obrigado --- */
-.carrinho-container, .pedido-resumo {
-    background: #fff;
+/* --- Carrinho e Obrigado --- */
+.cart-container, .thank-you-card {
+    background-color: var(--card-background);
     padding: 2rem;
-    border-radius: 8px;
-    margin-top: 2rem;
-    border: 1px solid var(--cor-secundaria);
+    border-radius: 10px;
 }
 
-.carrinho-lista {
-    list-style: none;
-    margin-bottom: 1.5rem;
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
 }
 
-.carrinho-lista li {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--cor-secundaria);
+.cart-table th, .cart-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.carrinho-lista li:last-child {
-    border-bottom: none;
-}
-
-.carrinho-total {
+.cart-summary {
     text-align: right;
+}
+
+.cart-summary h2 {
+    margin-bottom: 1rem;
+}
+
+.cart-empty, .thank-you-card {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.order-summary {
+    list-style: none;
+    margin: 2rem 0;
+    display: inline-block;
+    text-align: left;
+}
+.order-summary li {
+    margin-bottom: 0.5rem;
+}
+.total {
     font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-}
-
-.checkout-form {
-    text-align: center;
-}
-
-.empty-message {
-    text-align: center;
-    padding: 2rem;
-    font-style: italic;
-    color: #6c757d;
+    margin-bottom: 2rem;
 }
 
