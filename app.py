@@ -6,7 +6,7 @@ from functools import wraps
 
 # --- Configuração da Aplicação ---
 app = Flask(__name__, template_folder='templates', static_folder='static')
-app.config['SECRET_KEY'] = os.urandom(24) # Chave secreta mais segura
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # --- Configuração da Base de Dados (Vercel Postgres ou SQLite local) ---
@@ -222,4 +222,34 @@ def setup_database():
             return "Base de dados recriada e populada com sucesso!", 200
         else:
             return "Base de dados já populada.", 200
+
+# --- Inicialização Automática do Banco de Dados ---
+def init_database():
+    """Inicializa o banco de dados se necessário"""
+    try:
+        # Cria as tabelas se elas não existem
+        db.create_all()
+        
+        # Verifica se as trufas já estão populadas
+        if Trufa.query.count() == 0:
+            trufas_iniciais = [
+                Trufa(nome='Brigadeiro', descricao='Trufa de brigadeiro tradicional', preco=5.00),
+                Trufa(nome='Ninho', descricao='Trufa de leite em pó', preco=5.00),
+                Trufa(nome='Ninho+Brigadeiro', descricao='Combinação de ninho e brigadeiro', preco=5.00),
+                Trufa(nome='Sensação', descricao='Chocolate com recheio de morango', preco=5.00),
+                Trufa(nome='Coco', descricao='Trufa de coco fresco', preco=5.00),
+                Trufa(nome='Amendoim', descricao='Trufa de pasta de amendoim', preco=5.00)
+            ]
+            db.session.add_all(trufas_iniciais)
+            db.session.commit()
+    except Exception as e:
+        print(f"Erro ao inicializar banco de dados: {e}")
+
+# Inicializa o banco de dados ao iniciar a aplicação
+with app.app_context():
+    init_database()
+
+# --- Entry point para Vercel ---
+if __name__ == '__main__':
+    app.run(debug=True)
 
