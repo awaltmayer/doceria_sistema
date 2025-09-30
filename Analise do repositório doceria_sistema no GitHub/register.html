@@ -3,11 +3,11 @@
 {% block title %}Registo - Doceria{% endblock %}
 
 {% block content %}
-<div class="auth-container">
-    <div class="auth-card">
+<div class="auth-wrapper">
+    <div class="auth-container">
         <h1>Crie a sua Conta</h1>
-        <p>É rápido e fácil.</p>
-        <form method="POST" action="{{ url_for('register') }}" class="auth-form">
+        <p class="auth-subtitle">É rápido e fácil.</p>
+        <form method="POST" action="{{ url_for('register') }}">
             <div class="form-group">
                 <label for="username">Nome de Utilizador</label>
                 <input type="text" id="username" name="username" required>
@@ -16,9 +16,9 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn">Criar Conta</button>
+            <button type="submit" class="btn btn-primary">Criar Conta</button>
         </form>
-        <div class="auth-switch">
+        <div class="auth-footer">
             <p>Já tem uma conta? <a href="{{ url_for('login') }}">Faça login aqui.</a></p>
         </div>
     </div>

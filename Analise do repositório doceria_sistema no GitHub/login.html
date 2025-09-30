@@ -3,11 +3,11 @@
 {% block title %}Login - Doceria{% endblock %}
 
 {% block content %}
-<div class="auth-container">
-    <div class="auth-card">
+<div class="auth-wrapper">
+    <div class="auth-container">
         <h1>Bem-vindo à Doceria</h1>
-        <p>Por favor, faça login para continuar</p>
-        <form method="POST" action="{{ url_for('login') }}" class="auth-form">
+        <p class="auth-subtitle">Por favor, faça login para continuar</p>
+        <form method="POST" action="{{ url_for('login') }}">
             <div class="form-group">
                 <label for="username">Nome de Utilizador</label>
                 <input type="text" id="username" name="username" required>
@@ -16,9 +16,9 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn">Entrar</button>
+            <button type="submit" class="btn btn-primary">Entrar</button>
         </form>
-        <div class="auth-switch">
+        <div class="auth-footer">
             <p>Não tem uma conta? <a href="{{ url_for('register') }}">Registe-se aqui.</a></p>
         </div>
     </div>

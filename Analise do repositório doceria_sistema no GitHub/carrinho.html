@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}Carrinho de Compras - Doceria{% endblock %}
+
+{% block content %}
+<div class="shop-wrapper">
+    <div class="container">
+        <header class="shop-header">
+            <h1 class="shop-title">🛒 Seu Carrinho</h1>
+            <div class="shop-nav">
+                <a href="{{ url_for('cardapio') }}" class="btn btn-secondary btn-small">← Voltar ao Cardápio</a>
+                <a href="{{ url_for('logout') }}" class="btn btn-secondary btn-small">Sair</a>
+            </div>
+        </header>
+
+        <div class="cart-container">
+            {% if itens_carrinho %}
+                <h2 class="cart-title">Itens Selecionados</h2>
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Preço Unitário</th>
+                            <th>Quantidade</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in itens_carrinho %}
+                        <tr>
+                            <td><strong>{{ item.nome }}</strong></td>
+                            <td>R$ {{ "%.2f"|format(item.preco) }}</td>
+                            <td>{{ item.quantidade }}</td>
+                            <td><strong>R$ {{ "%.2f"|format(item.subtotal) }}</strong></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="cart-summary">
+                    <h2>Total do Pedido</h2>
+                    <p class="cart-total">R$ {{ "%.2f"|format(total_geral) }}</p>
+                    <form method="POST" action="{{ url_for('checkout') }}">
+                        <button type="submit" class="btn btn-primary">🎉 Finalizar Compra</button>
+                    </form>
+                </div>
+            {% else %}
+                <div class="cart-empty">
+                    <h2>Seu carrinho está vazio</h2>
+                    <p>Que tal experimentar nossas deliciosas trufas?</p>
+                    <a href="{{ url_for('cardapio') }}" class="btn btn-primary">🍫 Começar a Comprar</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
