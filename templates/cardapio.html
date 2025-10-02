@@ -9,8 +9,8 @@
             <h1 class="shop-title">Nosso Cardápio</h1>
             <div class="shop-nav">
                 <span class="user-info">Olá, {{ session.username }}!</span>
-                <a href="{{ url_for('ver_carrinho') }}" class="btn btn-secondary btn-small">🛒 Ver Carrinho</a>
-                <a href="{{ url_for('logout') }}" class="btn btn-secondary btn-small">Sair</a>
+                <a href="{{ url_for(\'ver_carrinho\') }}" class="btn btn-secondary btn-small">🛒 Ver Carrinho</a>
+                <a href="{{ url_for(\'logout\') }}" class="btn btn-secondary btn-small">Sair</a>
             </div>
         </header>
 
@@ -18,23 +18,23 @@
             {% for trufa in trufas %}
             <div class="trufa-card card-hover">
                 <div class="trufa-image">
-                    {% if trufa.nome == 'Brigadeiro' %}🍫
-                    {% elif trufa.nome == 'Ninho' %}🥛
-                    {% elif trufa.nome == 'Ninho+Brigadeiro' %}🍫🥛
-                    {% elif trufa.nome == 'Sensação' %}🍓
-                    {% elif trufa.nome == 'Coco' %}🥥
-                    {% elif trufa.nome == 'Amendoim' %}🥜
+                    {% if trufa.nome == \'Brigadeiro\' %}🍫
+                    {% elif trufa.nome == \'Ninho\' %}🥛
+                    {% elif trufa.nome == \'Ninho+Brigadeiro\' %}🍫🥛
+                    {% elif trufa.nome == \'Sensação\' %}🍓
+                    {% elif trufa.nome == \'Coco\' %}🥥
+                    {% elif trufa.nome == \'Amendoim\' %}🥜
                     {% else %}🍬
                     {% endif %}
                 </div>
                 <h3>{{ trufa.nome }}</h3>
                 <p class="descricao">{{ trufa.descricao }}</p>
-                <p class="preco">R$ {{ "%.2f"|format(trufa.preco) }}</p>
-                <form method="POST" action="{{ url_for('adicionar_carrinho') }}">
+                <p class="preco">R$ {{ \"%.2f\"|format(trufa.preco) }}</p>
+                <form method="POST" action="{{ url_for(\'adicionar_carrinho\') }}">
                     <input type="hidden" name="trufa_id" value="{{ trufa.id }}">
                     <div class="form-group-inline">
                         <label for="quantidade-{{ trufa.id }}">Quantidade:</label>
-                        <input type="number" id="quantidade-{{ trufa.id }}" name="quantidade" value="{{ session.get('carrinho', {}).get(trufa.id|string, 0) }}" min="0" class="quantidade-input">
+                        <input type="number" id="quantidade-{{ trufa.id }}" name="quantidade" value="{{ session.get(\'carrinho\', {}).get(trufa.id|string, 0) }}" min="0" class="quantidade-input">
                     </div>
                     <button type="submit" class="btn btn-primary btn-small">Atualizar Carrinho</button>
                 </form>
@@ -44,4 +44,3 @@
     </div>
 </div>
 {% endblock %}
-

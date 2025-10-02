@@ -1,5 +1,5 @@
 /* --- Google Fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url(\'https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap\' );
 
 /* --- Variáveis de Cor --- */
 :root {
@@ -44,7 +44,7 @@ html {
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: \'Inter\', sans-serif;
     background: var(--primary-gradient);
     color: var(--text-primary);
     line-height: 1.6;
@@ -54,7 +54,7 @@ body {
 }
 
 body::before {
-    content: '';
+    content: \'\';
     position: fixed;
     top: 0;
     left: 0;
@@ -75,7 +75,7 @@ body::before {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Dancing Script', cursive;
+    font-family: \'Dancing Script\', cursive;
     font-weight: 600;
     line-height: 1.2;
 }
@@ -118,7 +118,7 @@ a {
     padding: 1rem 2rem;
     border: none;
     border-radius: 50px;
-    font-family: 'Inter', sans-serif;
+    font-family: \'Inter\', sans-serif;
     font-weight: 600;
     font-size: 1rem;
     cursor: pointer;
@@ -130,7 +130,7 @@ a {
 }
 
 .btn::before {
-    content: '';
+    content: \'\';
     position: absolute;
     top: 0;
     left: -100%;
@@ -195,7 +195,7 @@ a {
 }
 
 .flash::before {
-    content: '';
+    content: \'\';
     position: absolute;
     top: 0;
     left: 0;
@@ -242,7 +242,7 @@ a {
 }
 
 .auth-container::before {
-    content: '';
+    content: \'\';
     position: absolute;
     top: -50%;
     left: -50%;
@@ -287,7 +287,7 @@ a {
     padding: 1rem 1.5rem;
     border: 2px solid var(--border-dark);
     border-radius: 15px;
-    font-family: 'Inter', sans-serif;
+    font-family: \'Inter\', sans-serif;
     font-size: 1rem;
     transition: all 0.3s ease;
     background: rgba(255, 255, 255, 0.8);
@@ -386,7 +386,7 @@ a {
 }
 
 .trufa-card::before {
-    content: '';
+    content: \'\';
     position: absolute;
     top: 0;
     left: 0;
@@ -545,7 +545,7 @@ a {
 }
 
 .thank-you-card::before {
-    content: '';
+    content: \'\';
     position: absolute;
     top: -50%;
     left: -50%;
