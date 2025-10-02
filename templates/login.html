@@ -1,26 +1,26 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Doceria</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h2>Login</h2>
+{% extends "base.html" %}
+
+{% block title %}Login - Doceria{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-container">
+        <h1>Bem-vindo à Doceria</h1>
+        <p class="auth-subtitle">Por favor, faça login para continuar</p>
         <form method="POST" action="{{ url_for('login') }}">
             <div class="form-group">
-                <label for="username">Usuário</label>
+                <label for="username">Nome de Utilizador</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="password">Senha</label>
+                <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">Entrar</button>
+            <button type="submit" class="btn btn-primary">Entrar</button>
         </form>
-        <p>Não tem uma conta? <a href="{{ url_for('register') }}">Registe-se aqui.</a></p>
+        <div class="auth-footer">
+            <p>Não tem uma conta? <a href="{{ url_for('register') }}">Registe-se aqui.</a></p>
+        </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

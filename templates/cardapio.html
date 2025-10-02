@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 
 {% block title %}Cardápio - Doceria{% endblock %}
@@ -18,12 +19,12 @@
             {% for trufa in trufas %}
             <div class="trufa-card card-hover">
                 <div class="trufa-image">
-                    {% if trufa.nome == \'Brigadeiro\' %}🍫
-                    {% elif trufa.nome == \'Ninho\' %}🥛
-                    {% elif trufa.nome == \'Ninho+Brigadeiro\' %}🍫🥛
-                    {% elif trufa.nome == \'Sensação\' %}🍓
-                    {% elif trufa.nome == \'Coco\' %}🥥
-                    {% elif trufa.nome == \'Amendoim\' %}🥜
+                    {% if trufa.nome == 'Brigadeiro' %}🍫
+                    {% elif trufa.nome == 'Ninho' %}🥛
+                    {% elif trufa.nome == 'Ninho+Brigadeiro' %}🍫🥛
+                    {% elif trufa.nome == 'Sensação' %}🍓
+                    {% elif trufa.nome == 'Coco' %}🥥
+                    {% elif trufa.nome == 'Amendoim' %}🥜
                     {% else %}🍬
                     {% endif %}
                 </div>
