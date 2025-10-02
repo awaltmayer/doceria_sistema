@@ -8,8 +8,8 @@
         <header class="shop-header">
             <h1 class="shop-title">🛒 Seu Carrinho</h1>
             <div class="shop-nav">
-                <a href="{{ url_for(\'cardapio\') }}" class="btn btn-secondary btn-small">← Voltar ao Cardápio</a>
-                <a href="{{ url_for(\'logout\') }}" class="btn btn-secondary btn-small">Sair</a>
+                <a href="{{ url_for('cardapio') }}" class="btn btn-secondary btn-small">← Voltar ao Cardápio</a>
+                <a href="{{ url_for('logout') }}" class="btn btn-secondary btn-small">Sair</a>
             </div>
         </header>
 
@@ -40,7 +40,7 @@
                 <div class="cart-summary">
                     <h2>Total do Pedido</h2>
                     <p class="cart-total">R$ {{ \"%.2f\"|format(total_geral) }}</p>
-                    <form method="POST" action="{{ url_for(\'checkout\') }}">
+                    <form method="POST" action="{{ url_for('checkout') }}">
                         <button type="submit" class="btn btn-primary">🎉 Finalizar Compra</button>
                     </form>
                 </div>
@@ -48,7 +48,7 @@
                 <div class="cart-empty">
                     <h2>Seu carrinho está vazio</h2>
                     <p>Que tal experimentar nossas deliciosas trufas?</p>
-                    <a href="{{ url_for(\'cardapio\') }}" class="btn btn-primary">🍫 Começar a Comprar</a>
+                    <a href="{{ url_for('cardapio') }}" class="btn btn-primary">🍫 Começar a Comprar</a>
                 </div>
             {% endif %}
         </div>
