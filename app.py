@@ -1,3 +1,4 @@
+
 import os
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
@@ -252,4 +253,3 @@ with app.app_context():
 # --- Entry point para Vercel ---
 if __name__ == '__main__':
     app.run(debug=True)
-

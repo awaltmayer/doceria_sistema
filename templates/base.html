@@ -7,11 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-<<<<<<<< HEAD:templates/layout.html
-    <link rel="stylesheet" href="{{ url_for(\'static\', filename=\'style.css\' ) }}">
-========
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
->>>>>>>> ec33d71d3e7e6e72e0776f7e88beceaad5e40196:templates/base.html
 </head>
 <body>
     <main>
@@ -26,10 +22,6 @@
         {% endwith %}
         {% block content %}{% endblock %}
     </main>
-<<<<<<<< HEAD:templates/layout.html
-    <script src="{{ url_for(\'static\', filename=\'script.js\') }}"></script>
-========
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
->>>>>>>> ec33d71d3e7e6e72e0776f7e88beceaad5e40196:templates/base.html
 </body>
 </html>
